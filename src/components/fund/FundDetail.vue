@@ -20,13 +20,23 @@
       <div class="holding-stock" v-for="holdingStock in holdingStocks" :key="holdingStock.code">
         <div class="holding-stock-item">🦊{{holdingStock.name}}</div>
         <div class="holding-stock-item">
-          <a :href="`${getStockURL(holdingStock.code)}`" target="_blank">👉</a>{{holdingStock.code}}
+          <a :href="`${getStockURL(holdingStock.code)}`" target="_blank">👉</a>
+          {{holdingStock.code}}
         </div>
         <div class="holding-stock-item">{{holdingStock.ratio}} %🧲</div>
         <div class="holding-stock-item">
-          <img
-            :src="`http://webquoteklinepic.eastmoney.com/GetPic.aspx?nid=${holdingStock.code.length == 6 ? (holdingStock.code[0]=='6' ? 1 : 0) : 116}.${holdingStock.code}&UnitWidth=-6&imageType=KXL&EF=EXTENDED_BOLL&Formula=KDJ&AT=0&&type=&token=44c9d251add88e27b65ed86506f6e5da&_=${Math.random()}`"
-          />
+          <div class="k-charts">
+            <div class="kdj-chart">
+              <img
+                :src="`http://webquoteklinepic.eastmoney.com/GetPic.aspx?nid=${holdingStock.code.length == 6 ? (holdingStock.code[0]=='6' ? 1 : 0) : 116}.${holdingStock.code}&UnitWidth=-6&imageType=KXL&EF=EXTENDED_BOLL&Formula=KDJ&AT=0&&type=&token=44c9d251add88e27b65ed86506f6e5da&_=${Math.random()}`"
+              />
+            </div>
+            <div class="cci-chart">
+              <img
+                :src="`http://webquoteklinepic.eastmoney.com/GetPic.aspx?nid=${holdingStock.code.length == 6 ? (holdingStock.code[0]=='6' ? 1 : 0) : 116}.${holdingStock.code}&UnitWidth=-6&imageType=KXL&EF=EXTENDED_BOLL&Formula=CCI&AT=0&&type=&token=44c9d251add88e27b65ed86506f6e5da&_=${Math.random()}`"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -102,7 +112,9 @@ export default {
       this.fundId = this.$route.params.fundId;
       this.getFundNameByFundId(this.fundId);
       this.getHoldingStocks(this.fundId);
-      this.fundEstimatedValueChart = `http://j4.dfcfw.com/charts/pic6/${this.fundId}.png?v=${Math.random()}`;
+      this.fundEstimatedValueChart = `http://j4.dfcfw.com/charts/pic6/${
+        this.fundId
+      }.png?v=${Math.random()}`;
     },
   },
   created() {},
@@ -172,5 +184,15 @@ input {
   border: 1px solid #f4f4f4;
   text-align: center;
   vertical-align: middle;
+}
+.kdj-chart {
+  display: block;
+}
+.cci-chart {
+  display: block;
+  position: relative;
+  top: -285px;
+  z-index: -1;
+  height: 85px;
 }
 </style>
